@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Currency Converter</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="particles" id="particles-js"></div>
+  
+  <div class="container">
+    <div class="header">
+      <i class="fas fa-coins logo"></i>
+      <h2>Currency Converter</h2>
+      <div class="currency-line"></div>
+    </div>
+    
+    <form>
+      <div class="amount">
+        <p class="input-label">Enter Amount</p>
+        <div class="input-container">
+          <input value="1" type="text" class="glow-on-hover" />
+          <i class="fas fa-money-bill-wave input-icon"></i>
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <!-- From Currency -->
+        <div class="from">
+          <p class="dropdown-label">From</p>
+          <div class="select-container pulse-on-hover">
+            <img src="https://flagsapi.com/US/flat/64.png" alt="From Country Flag" class="flag" />
+            <select name="from" class="from-select"></select>
+            <i class="fas fa-chevron-down select-icon"></i>
+          </div>
+        </div>
+
+        <!-- Arrow -->
+        <div class="swap-btn" title="Swap Currencies">
+          <i class="fas fa-exchange-alt"></i>
+        </div>
+
+        <!-- To Currency -->
+        <div class="to">
+          <p class="dropdown-label">To</p>
+          <div class="select-container pulse-on-hover">
+            <img src="https://flagsapi.com/IN/flat/64.png" alt="To Country Flag" class="flag" />
+            <select name="to" class="to-select"></select>
+            <i class="fas fa-chevron-down select-icon"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Message Box -->
+      <div class="msg">
+        <div class="rate-display">
+          <span class="rate-value">1</span> 
+          <span class="from-currency">USD</span> 
+          <i class="fas fa-equals"></i> 
+          <span class="rate-value">80</span> 
+          <span class="to-currency">INR</span>
+        </div>
+        <div class="last-updated">Last updated: <span class="update-time">Just now</span></div>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="convert-btn">
+        <i class="fas fa-sync-alt"></i> 
+        <span class="btn-text">Convert</span>
+        <span class="btn-loader"></span>
+      </button>
+    </form>
+    
+    <div class="footer">
+      <p class="disclaimer">Rates are for informational purposes only</p>
+    </div>
+  </div>
+
+  <!-- Particles.js -->
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  
+  <!-- JavaScript -->
+  <script src="codes.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
