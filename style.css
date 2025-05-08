@@ -27,6 +27,8 @@ body {
   color: var(--text);
   position: relative;
   overflow: hidden;
+  min-width: 1200px;
+  overflow-x: auto;
 }
 
 .particles {
@@ -51,6 +53,9 @@ body {
   z-index: 1;
   backdrop-filter: blur(5px);
   border: 1px solid rgba(255, 255, 255, 0.2);
+  min-width: 500px;
+  transform-origin: top center;
+  transform: scale(0.8);
 }
 
 @keyframes fadeIn {
@@ -230,7 +235,7 @@ h2 {
 .swap-btn:hover {
   background-color: var(--primary);
   color: white;
-  transform: rotate(180deg);
+  transform: rotate(180deg) !important;
   border-color: var(--primary);
 }
 
@@ -332,24 +337,7 @@ h2 {
   color: var(--text-light);
   opacity: 0.7;
 }
-/* Force desktop layout on all devices */
-body {
-  min-width: 1200px;
-  overflow-x: auto;
-}
 
-.container {
-  min-width: 500px;
-  transform-origin: top center;
-  transform: scale(0.8); /* Adjust scale as needed */
-}
-
-/* Disable touch animations */
-.swap-btn:hover {
-  transform: rotate(180deg) !important;
-}
-
-/* Floating animation for container */
 @keyframes float {
   0% { transform: translateY(0px); }
   50% { transform: translateY(-10px); }
@@ -360,7 +348,6 @@ body {
   animation: float 3s ease-in-out infinite;
 }
 
-/* Mobile Scaling Solution */
 @media (max-width: 768px) {
   body {
     display: block;
@@ -369,7 +356,7 @@ body {
     -webkit-text-size-adjust: none;
     text-size-adjust: none;
   }
-  
+
   .container {
     transform: scale(0.9);
     transform-origin: top center;
@@ -378,20 +365,54 @@ body {
     margin: 0 auto;
     padding: 2rem;
   }
-  
-  /* Disable hover effects on mobile */
+
+  .dropdown {
+    flex-direction: row !important;
+  }
+
+  .swap-btn,
   .swap-btn:hover,
   .select-container:hover,
   .convert-btn:hover {
     transform: none !important;
+    box-shadow: none !important;
   }
-  
-  /* Force desktop layout */
-  .dropdown {
-    flex-direction: row !important;
+
+  .container:hover {
+    animation: none !important;
   }
-  
-  .swap-btn {
-    transform: rotate(0deg) !important;
+}
+
+/* Mobile Scaling Fix */
+@media (hover: none) {
+  html {
+    overflow-x: hidden;
+    touch-action: manipulation;
+  }
+
+  body {
+    transform: scale(0.85);
+    transform-origin: top center;
+    width: 117.65%;
+    overflow-x: hidden;
+    position: relative;
+    left: -8.5%;
+  }
+
+  .container {
+    pointer-events: auto;
+    animation: none !important;
+  }
+
+  .swap-btn:hover,
+  .select-container:hover,
+  .convert-btn:hover,
+  .amount input:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  .container:hover {
+    animation: none !important;
   }
 }

@@ -17,7 +17,6 @@ for (let select of dropdowns) {
     newOption.innerText = currCode;
     newOption.value = currCode;
 
-    // Set default selections
     if (select.name === "from" && currCode === "USD") {
       newOption.selected = true;
     } else if (select.name === "to" && currCode === "INR") {
@@ -27,19 +26,17 @@ for (let select of dropdowns) {
     select.appendChild(newOption);
   }
 
-  // Update flag and display when currency changes
   select.addEventListener("change", (e) => {
     updateFlag(e.target);
     updateCurrencyDisplay();
   });
 }
 
-// Fetch exchange rates and convert
 const convert = async () => {
-  btn.classList.add("loading"); // Show loading spinner
-  
+  btn.classList.add("loading");
+
   const amtVal = parseFloat(amountInput.value.trim()) || 1;
-  amountInput.value = amtVal; // Ensure valid number
+  amountInput.value = amtVal;
 
   const apiKey = "2874dfb39c9c3b64c9698f1d";
   const URL = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/${fromCurr.value}`;
@@ -51,14 +48,12 @@ const convert = async () => {
     if (data.result === "success") {
       const rate = data.conversion_rates[toCurr.value];
       const convertedAmount = (amtVal * rate).toFixed(2);
-      
-      // Update ALL parts of the message:
-      rateValues[0].textContent = amtVal;               // Input amount (e.g., 100)
-      fromCurrencyDisplay.textContent = fromCurr.value;  // From currency (e.g., USD)
-      animateRateChange(rateValues[1], convertedAmount); // Converted amount (e.g., 8200)
-      toCurrencyDisplay.textContent = toCurr.value;      // To currency (e.g., INR)
-      
-      // Update timestamp
+
+      rateValues[0].textContent = amtVal;
+      fromCurrencyDisplay.textContent = fromCurr.value;
+      animateRateChange(rateValues[1], convertedAmount);
+      toCurrencyDisplay.textContent = toCurr.value;
+
       updateTime.textContent = new Date().toLocaleTimeString();
     } else {
       showError("Failed to fetch exchange rate.");
@@ -67,11 +62,10 @@ const convert = async () => {
     showError("Error fetching data. Please try again later.");
     console.error(err);
   } finally {
-    btn.classList.remove("loading"); // Hide spinner
+    btn.classList.remove("loading");
   }
 };
 
-// Animate the converted rate
 function animateRateChange(element, newValue) {
   element.style.transform = "scale(1.2)";
   element.style.color = "#fd79a8";
@@ -82,58 +76,51 @@ function animateRateChange(element, newValue) {
   }, 300);
 }
 
-// Show error message
 function showError(message) {
   msg.innerHTML = `<div class="error-message"><i class="fas fa-exclamation-circle"></i> ${message}</div>`;
   msg.style.backgroundColor = "#ffebee";
   msg.style.borderLeft = "5px solid #d63031";
-  
+
   setTimeout(() => {
     msg.style.backgroundColor = "#f5f6fa";
     msg.style.borderLeft = "5px solid #6c5ce7";
   }, 3000);
 }
 
-// Update currency code displays
 function updateCurrencyDisplay() {
   fromCurrencyDisplay.textContent = fromCurr.value;
   toCurrencyDisplay.textContent = toCurr.value;
 }
 
-// Update flag image with fade animation
 const updateFlag = (element) => {
   const currCode = element.value;
   const countryCode = countryList[currCode];
   const img = element.parentElement.querySelector("img");
-  
-  img.style.opacity = 0; // Fade out
+
+  img.style.opacity = 0;
   setTimeout(() => {
     img.src = `https://flagsapi.com/${countryCode}/flat/64.png`;
-    setTimeout(() => img.style.opacity = 1, 50); // Fade in
+    setTimeout(() => img.style.opacity = 1, 50);
   }, 200);
 };
 
-// Convert on button click
 btn.addEventListener("click", (e) => {
   e.preventDefault();
   convert();
 });
 
-// Real-time conversion on input change
 amountInput.addEventListener("input", () => {
   if (!isNaN(amountInput.value.trim())) {
     convert();
   }
 });
 
-// Initialize on page load
 window.addEventListener("load", () => {
   updateFlag(fromCurr);
   updateFlag(toCurr);
   updateCurrencyDisplay();
   convert();
-  
-  // Floating particles effect
+
   particlesJS("particles-js", {
     particles: {
       number: { value: 50, density: { enable: true, value_area: 800 } },
@@ -154,35 +141,25 @@ window.addEventListener("load", () => {
   });
 });
 
-// Swap currencies
 document.querySelector(".swap-btn").addEventListener("click", (e) => {
   e.preventDefault();
-  
-  // Rotate icon
+
   const swapIcon = e.currentTarget.querySelector("i");
   swapIcon.style.transform = "rotate(180deg)";
   setTimeout(() => swapIcon.style.transform = "rotate(0deg)", 300);
-  
-  // Swap currencies
+
   [fromCurr.value, toCurr.value] = [toCurr.value, fromCurr.value];
   updateFlag(fromCurr);
   updateFlag(toCurr);
   convert();
 });
 
-// Disable touch events 
-document.addEventListener('touchstart', function(e) {
-  e.preventDefault();
-}, { passive: false });
-
-// Mobile touch event handling
 document.addEventListener('touchstart', function(e) {
   if (e.touches.length > 1) {
     e.preventDefault();
   }
 }, { passive: false });
 
-// Prevent double-tap zoom
 let lastTouchEnd = 0;
 document.addEventListener('touchend', function(e) {
   const now = Date.now();
@@ -191,3 +168,19 @@ document.addEventListener('touchend', function(e) {
   }
   lastTouchEnd = now;
 }, { passive: false });
+
+// Mobile touch handlers
+function isMobile() {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
+if (isMobile()) {
+  document.addEventListener('gesturestart', function(e) {
+    e.preventDefault();
+  });
+
+  document.querySelectorAll('button, select, input').forEach(el => {
+    el.style.tapHighlightColor = 'transparent';
+    el.style.webkitTapHighlightColor = 'transparent';
+  });
+}
