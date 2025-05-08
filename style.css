@@ -332,24 +332,21 @@ h2 {
   color: var(--text-light);
   opacity: 0.7;
 }
+/* Force desktop layout on all devices */
+body {
+  min-width: 1200px;
+  overflow-x: auto;
+}
 
-/* Responsive adjustments */
-@media (max-width: 480px) {
-  .container {
-    padding: 1.5rem;
-  }
-  
-  .dropdown {
-    flex-direction: column;
-  }
-  
-  .swap-btn {
-    transform: rotate(90deg);
-  }
-  
-  .swap-btn:hover {
-    transform: rotate(270deg);
-  }
+.container {
+  min-width: 500px;
+  transform-origin: top center;
+  transform: scale(0.8); /* Adjust scale as needed */
+}
+
+/* Disable touch animations */
+.swap-btn:hover {
+  transform: rotate(180deg) !important;
 }
 
 /* Floating animation for container */
