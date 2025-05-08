@@ -359,3 +359,39 @@ body {
 .container:hover {
   animation: float 3s ease-in-out infinite;
 }
+
+/* Mobile Scaling Solution */
+@media (max-width: 768px) {
+  body {
+    display: block;
+    padding: 20px;
+    overflow-x: auto;
+    -webkit-text-size-adjust: none;
+    text-size-adjust: none;
+  }
+  
+  .container {
+    transform: scale(0.9);
+    transform-origin: top center;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  /* Disable hover effects on mobile */
+  .swap-btn:hover,
+  .select-container:hover,
+  .convert-btn:hover {
+    transform: none !important;
+  }
+  
+  /* Force desktop layout */
+  .dropdown {
+    flex-direction: row !important;
+  }
+  
+  .swap-btn {
+    transform: rotate(0deg) !important;
+  }
+}
