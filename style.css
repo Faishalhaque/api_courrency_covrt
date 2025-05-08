@@ -1,3 +1,7 @@
+html {
+  touch-action: manipulation; /* Disables double-tap zoom */
+}
+
 :root {
   --primary: #6c5ce7;
   --secondary: #a29bfe;
@@ -151,6 +155,17 @@ h2 {
   flex: 1;
   outline: none;
   cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: none;
+  padding-right: 30px;
+  width: 100%; /* Ensures proper width for ellipsis */
+  text-overflow: ellipsis; /* Handles long currency names */
+}
+
+.select-container select::-ms-expand {
+  display: none;
 }
 
 .flag {
@@ -255,4 +270,49 @@ h2 {
   .convert-btn {
     font-size: 1rem;
   }
+}
+
+/* Mobile Responsiveness Fixes */
+@media (max-width: 600px) {
+  body {
+    padding: 10px;
+    align-items: flex-start;
+    min-height: 100vh;
+    height: auto;
+  }
+
+  .container {
+    width: 95%;
+    padding: 1rem;
+    margin: 10px auto;
+  }
+
+  .dropdown {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .swap-btn {
+    margin: 0 auto;
+    transform: rotate(90deg);
+  }
+
+  .amount input {
+    font-size: 16px;
+    padding: 12px 12px 12px 35px;
+  }
+
+  .select-container select {
+    font-size: 16px;
+  }
+
+  .msg {
+    padding: 12px;
+    font-size: 14px;
+  }
+}
+
+/* Prevent zoom on input focus */
+select, input {
+  font-size: 16px !important;
 }

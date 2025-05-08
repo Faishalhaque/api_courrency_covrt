@@ -154,33 +154,32 @@ document.querySelector(".swap-btn").addEventListener("click", (e) => {
   convert();
 });
 
-document.addEventListener('touchstart', function(e) {
-  if (e.touches.length > 1) {
-    e.preventDefault();
+// Enhanced mobile handling
+document.addEventListener('DOMContentLoaded', function() {
+  if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+    // Prevent zoom on input focus
+    document.querySelector('input').addEventListener('focus', function() {
+      window.scrollTo(0, 0);
+      document.body.style.transform = 'scale(1)';
+    });
+    
+    // Better touch handling
+    document.querySelectorAll('select, input, button').forEach(el => {
+      el.style.tapHighlightColor = 'transparent';
+      el.style.webkitTapHighlightColor = 'transparent';
+    });
+
+    // Prevent multi-touch gestures
+    document.addEventListener('gesturestart', function(e) {
+      e.preventDefault();
+    });
+
+    // Prevent double-tap zoom
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', function(e) {
+      const now = Date.now();
+      if (now - lastTouchEnd <= 300) e.preventDefault();
+      lastTouchEnd = now;
+    }, { passive: false });
   }
-}, { passive: false });
-
-let lastTouchEnd = 0;
-document.addEventListener('touchend', function(e) {
-  const now = Date.now();
-  if (now - lastTouchEnd <= 300) {
-    e.preventDefault();
-  }
-  lastTouchEnd = now;
-}, { passive: false });
-
-// Mobile touch handlers
-function isMobile() {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-}
-
-if (isMobile()) {
-  document.addEventListener('gesturestart', function(e) {
-    e.preventDefault();
-  });
-
-  document.querySelectorAll('button, select, input').forEach(el => {
-    el.style.tapHighlightColor = 'transparent';
-    el.style.webkitTapHighlightColor = 'transparent';
-  });
-}
+});
