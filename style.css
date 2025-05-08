@@ -416,3 +416,15 @@ h2 {
     animation: none !important;
   }
 }
+@media (max-width: 768px) {
+  .container {
+    width: 90%;
+    padding: 1rem;
+  }
+  .dropdown {
+    flex-direction: column;
+  }
+  .swap-btn {
+    margin: 1rem 0;
+  }
+}
